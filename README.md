@@ -16,7 +16,7 @@ consider when you have a bug or error in your code.
 
 def a_func(x):
     return x - '2'
-    #return x - '2'
+    #return x - 2
 
 def main():
     some_value = 12
