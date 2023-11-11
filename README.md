@@ -55,10 +55,25 @@ This pattern is followed by almost all code that it written in traditional progr
 
 Asyncio, however, works a little differently.
 
-### coroutines 
+### coroutine calling
 
-in asyncio, instead of one stack of frames per thread, each thread has a `event_loop` object. The event loop contains within it a list of objects called Tasks. Each Task maintains a single stack, and its own execution pointer as well.
+in asyncio, instead of one stack of frames per thread, each thread has a `event_loop` object. The event loop contains within it a list of objects called `Tasks``. Each `Task` maintains a single stack, and its own execution pointer as well.
 
+the event loop can only have one Task actually executing (the processor can still only do one thing at a time, after all), whilst the other tasks in the loop are all paused. The currently executing task will continue to execute exactly as if it were executing a function in a normal (synchronous) Python program, right up until it gets to a point where it would have to wait for something to happen before it can continue.
+
+Then, instead of waiting, the code in the Task *yields control*. This means that it asks the event loop to pause the Task it is running in, and wake it up again at a future point once the thing it needs to wait for has happened. The event loop can then select one of its other sleeping tasks to wake up and become the executing task instead. 
+
+if none of them are able to awaken (because they’re all waiting for things to happen), then it can wait.
+
+This way the CPU’s time can be shared between different tasks, all of which are executing code capable of yielding like this when they would otherwise wait.
+
+<img src="https://bbc.github.io/cloudfit-public-docs/images/asyncio/EventLoop.svg" >
+
+This execution pattern, where code control moves back and forth between different tasks, waking them back up at the point where they left off each time is called “coroutine calling”, and this is what asyncio provides to Python programming, as a means to ensure that CPUs sit idle less of the time.
+
+Anything dealing with http or other internet traffic protocols is almost guaranteed to be IO bound. coroutine calling works well for IO-bound code, where long pauses are expected to wait for something else (often another computer) to respond to a request.
+
+An event loop cannot forcibly interrupt a coroutine that is currently executing. A coroutine that is executing will continue executing until it yields control. The event loop serves to select which coroutine to schedule next, and keeps track of which coroutines are blocked and unable to execute until some IO has completed, but it only does these things when no coroutine is currently executing.
 
 ## References
 
