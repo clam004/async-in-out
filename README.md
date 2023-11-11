@@ -75,6 +75,40 @@ Anything dealing with http or other internet traffic protocols is almost guarant
 
 An event loop cannot forcibly interrupt a coroutine that is currently executing. A coroutine that is executing will continue executing until it yields control. The event loop serves to select which coroutine to schedule next, and keeps track of which coroutines are blocked and unable to execute until some IO has completed, but it only does these things when no coroutine is currently executing.
 
+### `async def`
+
+The most basic tool in the tool kit of an asynchronous programmer in Python is the new keyword async def, which is used to declare an asynchronous coroutine function in the same way that def is used to define a normal synchronous function.
+
+```python
+async def example_coroutine_function(a, b):
+    # Asynchronous code goes here
+    # There are several new keywords which can only be used inside asynchronous code: await, async with and async for.
+    # Note that async def is not one of the keywords reserved for use in asynchronous code. It can be used anywhere were def can be used, though its effect is slightly different.
+    ...
+
+def example_function(a, b):
+    # Synchronous code goes here
+    ...
+```
+
+The Python `async def` keyword creates a callable object with a name, unlike regular python  callable objects like `def`, when the `async def` object is called the code block of the function is not run. Eg.
+
+```python
+async def example_coroutine_function(a, b, c):
+  ...
+```
+means that example_coroutine_function is now a callable object which takes three parameters. When you invoke it like so:
+
+```python
+r = example_coroutine_function(1, 2, 3)
+```
+
+this does NOT cause the function code block to be run. To make the code block actually run you need to make use of one of the facilities that asyncio provides for running a coroutine. Most commonly this is the `await` keyword.
+
+`r = example_coroutine_function(1, 2, 3)` created an object of class Coroutine, and is assigned to `r`.
+
+
+
 ## References
 
 https://bbc.github.io/cloudfit-public-docs/asyncio/asyncio-part-1
