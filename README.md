@@ -117,8 +117,6 @@ this does NOT cause the function code block to be run. To make the code block ac
 
 `r = example_coroutine_function(1, 2, 3)` created an object of class Coroutine, and is assigned to `r`.
 
-
-
 ## References
 
 https://bbc.github.io/cloudfit-public-docs/asyncio/asyncio-part-1
