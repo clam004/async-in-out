@@ -7,9 +7,19 @@ asyncio is designed to allow you to structure your code so that when one piece o
 
 It’s not about using multiple cores, it’s about using a single core more efficiently
 
+## setup
+
+```bash
+$ python3 -m pip install --upgrade pip 
+$ python3 -m pip install virtualenv # if not already done
+$ python3 -m venv venv
+$ source venv/bin/activate
+(venv) $ pip install jupyter
+```
+
 ### subroutines have one stack of frames per thread. 
 
-consider when you have a bug or error in your code.
+consider when you have a bug or error in your code. run the following in your terminal:
 
 ```python
 # bug.py
@@ -28,14 +38,14 @@ main()
 output
 
 ```bash
-async-in-out $ python3 bug.py
+async-in-out $ python3 scripts/bug.py
 Traceback (most recent call last):
-  File "/Users/async-in-out/bug.py", line 9, in <module>
+  File "/Users/async-in-out/scripts/bug.py", line 9, in <module>
     main()
   File "/Users/async-in-out/bug.py", line 7, in main
     some_other_value = a_func(some_value)
                        ^^^^^^^^^^^^^^^^^^
-  File "/Users/async-in-out/bug.py", line 2, in a_func
+  File "/Users/async-in-out/scripts/bug.py", line 2, in a_func
     return x - '2'
            ~~^~~~~
 TypeError: unsupported operand type(s) for -: 'int' and 'str'
