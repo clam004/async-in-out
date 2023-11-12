@@ -121,6 +121,32 @@ this does NOT cause the function code block to be run. To make the code block ac
 
 see `notebooks/async_await.ipynb` for an example tutorial on async await
 
+# Streaming API
+
+next we put this into useful practice by building an API that lets you stream data
+
+
+
+Setup Node.js 16.20.0 with Node Version Manager:
+
+
 ## References
 
 https://bbc.github.io/cloudfit-public-docs/asyncio/asyncio-part-1
+
+https://github.com/harshitsinghai77/server-sent-events-using-fastapi-and-reactjs 
+
+https://github.com/haotian-liu/LLaVA
+
+https://superfastpython.com/asyncio-semaphore/
+
+
+### under construction
+
+```bash
+(venv) $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+(venv) $ echo ". ~/.nvm/nvm.sh" >> ~/.zprofile
+(venv) $ nvm install 16.20.0
+(venv) $ nvm use 16.20.0
+(venv) $ pip install -r requirements.txt 
+```
