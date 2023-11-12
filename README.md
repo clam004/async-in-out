@@ -67,7 +67,7 @@ Asyncio, however, works a little differently.
 
 ### coroutine calling
 
-in asyncio, instead of one stack of frames per thread, each thread has a `event_loop` object. The event loop contains within it a list of objects called `Tasks``. Each `Task` maintains a single stack, and its own execution pointer as well.
+in asyncio, instead of one stack of frames per thread, each thread has a `event_loop` object. The event loop contains within it a list of objects called `Tasks`. Each `Task` maintains a single stack, and its own execution pointer as well.
 
 the event loop can only have one Task actually executing (the processor can still only do one thing at a time, after all), whilst the other tasks in the loop are all paused. The currently executing task will continue to execute exactly as if it were executing a function in a normal (synchronous) Python program, right up until it gets to a point where it would have to wait for something to happen before it can continue.
 
@@ -116,6 +116,10 @@ r = example_coroutine_function(1, 2, 3)
 this does NOT cause the function code block to be run. To make the code block actually run you need to make use of one of the facilities that asyncio provides for running a coroutine. Most commonly this is the `await` keyword.
 
 `r = example_coroutine_function(1, 2, 3)` created an object of class Coroutine, and is assigned to `r`.
+
+`o = await r` runs `example_coroutine_function(1, 2, 3)`, but allows other tasks to run until `r` completes.
+
+see `notebooks/async_await.ipynb` for an example tutorial on async await
 
 ## References
 
